@@ -5,9 +5,10 @@
 
 ## Purpose
 
-This document explains every design decision in `html/index.html` so any
-future Claude or Codex session can maintain, extend, or build additional
-portal variants without re-litigating decisions already made.
+This document explains every design decision in `portal_index.html` (at the
+repository root) so any future Claude or Codex session can maintain, extend,
+or build additional portal variants without re-litigating decisions already
+made.
 
 ---
 
