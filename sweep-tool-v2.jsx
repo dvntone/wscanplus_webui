@@ -44,7 +44,7 @@ const OUI_DB = {
   "40CBC0": { vendor: "Apple AirTag",       type: "BLE Tracker",   threat: "HIGH" },
   "3CCD57": { vendor: "Apple AirTag",       type: "BLE Tracker",   threat: "HIGH" },
   "7CF05F": { vendor: "Apple AirTag",       type: "BLE Tracker",   threat: "HIGH" },
-  "DCE011": { vendor: "Apple FindMy",       type: "BLE Tracker",   threat: "HIGH" },
+  "DCDE11": { vendor: "Apple FindMy",       type: "BLE Tracker",   threat: "HIGH" },
   "087CBE": { vendor: "Tile Inc",           type: "BLE Tracker",   threat: "HIGH" },
   "AC3743": { vendor: "Tile Inc",           type: "BLE Tracker",   threat: "HIGH" },
   "94A3DA": { vendor: "Samsung SmartTag",   type: "BLE Tracker",   threat: "HIGH" },
