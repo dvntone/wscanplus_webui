@@ -630,13 +630,31 @@ function showSuccess(a, isGuest){
   document.getElementById("portal-form").style.display = "none";
   var ss = document.getElementById("success-screen");
   ss.style.display = "flex";
-  document.getElementById("session-meta").innerHTML =
-    "<div class='session-card-row'><span class='sk'>Connected</span><span class='sv'>"    + new Date().toLocaleTimeString()                                                    + "</span></div>" +
-    "<div class='session-card-row'><span class='sk'>Session type</span><span class='sv'>" + (isGuest ? "Guest" : "Authenticated")                                              + "</span></div>" +
-    "<div class='session-card-row'><span class='sk'>Device</span><span class='sv'>"       + (a.platform || "Unknown")                                                          + "</span></div>" +
-    "<div class='session-card-row'><span class='sk'>Network</span><span class='sv'>"      + (document.getElementById("ssid-display").textContent)                             + "</span></div>" +
-    "<div class='session-card-row'><span class='sk'>Connection</span><span class='sv'>"   + (a.conn || "WiFi")                                                                 + "</span></div>" +
-    "<div class='session-card-row'><span class='sk'>Verdict</span><span class='sv'>FAKE (TEST)</span></div>";
+  var meta = document.getElementById("session-meta");
+  if (meta) {
+    while (meta.firstChild) {
+      meta.removeChild(meta.firstChild);
+    }
+    function addRow(label, value) {
+      var row = document.createElement("div");
+      row.className = "session-card-row";
+      var sk = document.createElement("span");
+      sk.className = "sk";
+      sk.textContent = label;
+      var sv = document.createElement("span");
+      sv.className = "sv";
+      sv.textContent = value;
+      row.appendChild(sk);
+      row.appendChild(sv);
+      meta.appendChild(row);
+    }
+    addRow("Connected", new Date().toLocaleTimeString());
+    addRow("Session type", isGuest ? "Guest" : "Authenticated");
+    addRow("Device", a.platform || "Unknown");
+    addRow("Network", document.getElementById("ssid-display").textContent);
+    addRow("Connection", a.conn || "WiFi");
+    addRow("Verdict", "FAKE (TEST)");
+  }
   var dot = document.getElementById("status-dot");
   if(dot){dot.style.background="#0f9d58";dot.style.animation="none";}
   var st = document.getElementById("status-text");
