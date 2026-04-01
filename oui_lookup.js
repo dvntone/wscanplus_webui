@@ -34,7 +34,6 @@ let EMBEDDED_DB = [
   "083AF2|Espressif Systems|Spy Cam Chip|HIGH",
   "FCF5C4|Espressif Systems|Spy Cam Chip|HIGH",
   "1866DA|Espressif Systems|Spy Cam Chip|HIGH",
-  "AABBCC|Espressif Systems|Spy Cam Chip|HIGH",
   // ── IP Camera SoC Makers ───────────────────────────────────────────────
   "001AEF|Hisilicon|Surveillance SoC|HIGH",
   "0080AC|Ingenic Semi|Camera SoC|HIGH",
