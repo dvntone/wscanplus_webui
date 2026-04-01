@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 // ─── OUI Threat Database (embedded — no network needed) ────────────────────
 const OUI_DB = {
