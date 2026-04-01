@@ -278,7 +278,7 @@ function showHowToUse() {
     "2. Scan APs\n" +
     "3. Run: listap -a\n" +
     "4. Note any BSSID\n" +
-    "   you dont know\n" +
+    "   you don't know\n" +
     "5. Return here\n" +
     "6. Go to Browse\n" +
     "   OUIs by type\n" +
