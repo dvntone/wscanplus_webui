@@ -310,8 +310,9 @@ function IntelBadge({ item }) {
 }
 
 function RssiBar({ value }) {
-  if (!value || isNaN(parseInt(value))) return null;
-  const val = parseInt(value);
+  if (value == null || value === "") return null;
+  const val = Number(value);
+  if (Number.isNaN(val)) return null;
   const band = getRssiBand(val);
   const pct = rssiPercent(val);
   return (
