@@ -370,7 +370,8 @@ export default function SweepTool() {
       const savedLayout = window.localStorage.getItem(STORAGE_KEYS.layoutMode);
       const savedNote = window.localStorage.getItem(STORAGE_KEYS.operatorNote);
       const savedSnapshots = JSON.parse(window.localStorage.getItem(STORAGE_KEYS.snapshots) || "[]");
-      if (savedLayout) setLayoutMode(savedLayout);
+      const allowedLayouts = ["auto", "portrait", "tablet", "wide"];
+      if (savedLayout && allowedLayouts.includes(savedLayout)) setLayoutMode(savedLayout);
       if (savedNote) setOperatorNote(savedNote);
       if (Array.isArray(savedSnapshots)) setSnapshots(savedSnapshots);
     } catch {}
