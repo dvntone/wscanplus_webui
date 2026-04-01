@@ -492,10 +492,30 @@ export default function SweepTool() {
   };
 
   const copyReport = () => {
-    navigator.clipboard.writeText(buildReport()).then(()=>{
-      setCopied(true);
-      setTimeout(()=>setCopied(false),2000);
-    });
+    const report = buildReport();
+
+    // Prefer async clipboard API when available and permitted
+    if (typeof navigator !== "undefined" &&
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function") {
+      try {
+        navigator.clipboard.writeText(report)
+          .then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          })
+          .catch(() => {
+            // Fallback: manual copy prompt on write failure
+            window.prompt("Clipboard access failed. Copy the report below:", report);
+          });
+      } catch (e) {
+        // Fallback: manual copy prompt on unexpected error
+        window.prompt("Clipboard access failed. Copy the report below:", report);
+      }
+    } else {
+      // Fallback: clipboard API not available
+      window.prompt("Clipboard not available. Copy the report below:", report);
+    }
   };
 
   const saveSnapshot = () => {
