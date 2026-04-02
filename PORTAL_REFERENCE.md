@@ -1,5 +1,5 @@
 # wscanplus Portal Reference
-`docs/PORTAL_REFERENCE.md` — Claude/Codex session handoff document
+`PORTAL_REFERENCE.md` — Claude/Codex session handoff document
 
 ---
 
