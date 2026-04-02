@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  build:
+    name: Secret scan + file validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Scan for accidental secrets
+        run: |
+          if grep -rIl \
+            --exclude-dir=.git \
+            --exclude-dir=.github \
+            --exclude='*.example' \
+            --exclude='SECURITY.md' \
+            -E 'AKIA[0-9A-Z]{16}|AIzaSy[0-9A-Za-z_-]{33}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|-----BEGIN PGP PRIVATE KEY BLOCK-----|ghp_[0-9A-Za-z]{36}|ghs_[0-9A-Za-z]{36}' \
+            .; then
+            echo "ERROR: Potential secrets detected. Review the files above before merging."
+            exit 1
+          else
+            echo "No secrets detected."
+          fi
+
+      - name: Validate JS syntax
+        run: |
+          set -e
+          # Skip Flipper runtime scripts (use non-standard require API, not Node.js modules)
+          # Skip .jsx files (JSX syntax not supported by node --check)
+          for f in $(find . -name '*.js' -not -path './.git/*' -not -name 'oui_lookup.js'); do
+            echo "Checking $f"
+            node --check "$f"
+          done
+          echo "JS syntax OK"
+
+# Guardrails: No deploy/publish/trigger jobs. Only runs on PRs and non-main pushes.
+# All failures must be resolved before merging.
