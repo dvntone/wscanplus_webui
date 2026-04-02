@@ -714,7 +714,7 @@ function submitPortal(){
   btn.disabled = true;
   document.getElementById("btn-label").textContent = "Connecting...";
   document.getElementById("btn-spinner").style.display = "block";
-  dispatch(email, pass, tos, false);
+  dispatch(email, pass, tos, !email && !pass);
 }
 
 document.getElementById("field-email").addEventListener("input",function(){
