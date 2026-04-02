@@ -352,7 +352,7 @@ export default function SweepTool() {
   const [findings, setFindings]     = useState([]);
   const [findingInput, setFindingInput] = useState("");
   const [copied, setCopied]         = useState(false);
-  const [sweepTime] = useState(new Date().toISOString().slice(0,19).replace("T"," "));
+  const [sweepTime, setSweepTime] = useState(new Date().toISOString().slice(0,19).replace("T"," "));
   const [viewportWidth, setViewportWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 500);
   const [layoutMode, setLayoutMode] = useState("auto");
   const [operatorNote, setOperatorNote] = useState("");
@@ -1239,7 +1239,7 @@ export default function SweepTool() {
                 {label:"POSITION ALPHA",rssi:"",note:""},
                 {label:"POSITION BRAVO",rssi:"",note:""},
                 {label:"POSITION CHARLIE",rssi:"",note:""},
-              ]);setFindings([]);}}
+              ]);setFindings([]);setSweepTime(new Date().toISOString().slice(0,19).replace("T"," "));}}
             style={{...S.btnDim,width:"100%"}}
             title="Start a new sweep while keeping existing operator notes and snapshots"
           >

@@ -48,8 +48,7 @@ or domain is used.
 ## Detection signals embedded in the portal
 
 These are the structural properties that mark the portal as fake.
-Gemini checks these against `portal_truth.json`. All are real signals
-present in every actual fake portal deployed in the wild.
+All are real signals present in every actual fake portal deployed in the wild.
 
 | Signal | Where in file | Real portal comparison |
 |--------|--------------|----------------------|
@@ -142,7 +141,7 @@ inspection without needing to read the log file.
 - Do not remove the fingerprint JSON block — Gemini reads it.
 - Do not change the capture endpoint from `/capture` — Marauder handles it.
 - Do not add educational content or user warnings to this file — that is
-  Gemini's responsibility inside the app, per the AI split in `AGENTS.md`.
+  Gemini's responsibility inside the Android app (AI split: Gemini handles in-app analysis).
 
 ---
 
@@ -151,19 +150,18 @@ inspection without needing to read the log file.
 For each new portal variant (e.g. apartment complex portal, library portal,
 coffee shop portal):
 
-1. Copy `html/index.html` to `html/[variant_name].html`
+1. Copy `portal_index.html` to `[variant_name].html` in the repo root
 2. Change visual styling to match the new class (color scheme, logo area text)
 3. Keep all `data-wscanplus-*` attributes and the fingerprint block
 4. Update `artifact_id` in the fingerprint JSON to a new unique ID
-5. Add a corresponding `[variant_name]_truth.json` entry in `html/`
-6. Load via Flipper: `Evil Portal → Load Evil Portal HTML file`
+5. Load via Flipper: `Evil Portal → Load Evil Portal HTML file`
 
 ---
 
 ## File locations on Flipper SD
 
 ```
-SD:/apps_data/marauder/html/index.html          ← this portal
+SD:/apps_data/marauder/portal_index.html        ← this portal (copy from repo root)
 SD:/apps_data/marauder/logs/evilportal_NNN.log  ← capture output
 SD:/apps_data/marauder/pcaps/                   ← WiFi capture PCAPs
 ```
@@ -172,7 +170,6 @@ SD:/apps_data/marauder/pcaps/                   ← WiFi capture PCAPs
 
 ## Threat context alignment
 
-From `docs/THREAT_CONTEXT.md`:
 - Primary attack surface: evil twin / rogue AP with credential capture portal
 - Target population: non-technical older and disabled veterans in multi-unit housing
 - Observed attacker behavior: proximate, manual, adaptive, persistent
@@ -180,5 +177,5 @@ From `docs/THREAT_CONTEXT.md`:
 
 This portal directly tests the attack surface described. The Gemini agent's
 job is to detect it, score it, and surface a plain-language explanation of
-what it found — not to be triggered by this file or act outside its defined
-role per `docs/AGENTS.md`.
+what it found — not to be triggered by this file or act outside its in-app
+analysis role.

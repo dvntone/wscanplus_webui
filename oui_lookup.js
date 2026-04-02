@@ -84,7 +84,6 @@ let EMBEDDED_DB = [
   "40B4CD|Google Pixel|Mobile|LOW",
   "54EE75|Google Pixel|Mobile|LOW",
   "F8A9D0|Samsung|Mobile|LOW",
-  "94A3DA|Samsung|Mobile|LOW",
   "9C5C8E|Apple|Mobile|LOW",
 ];
 
@@ -357,6 +356,7 @@ while (running) {
     browseThreatCategory("CCTV Brand");
   } else if (choice === 5) {
     browseThreatCategory("IoT Device");
+    browseThreatCategory("Generic IoT");
   } else if (choice === 6) {
     showHowToUse();
   } else {

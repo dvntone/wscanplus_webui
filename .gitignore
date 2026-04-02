@@ -1,3 +1,8 @@
+# Local admin/maintenance scripts — not part of the product
+_*.py
+Docs/
+.ignore/
+
 # Logs
 logs
 *.log
