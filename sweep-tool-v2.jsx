@@ -1221,13 +1221,17 @@ export default function SweepTool() {
             {copied?"✓ REPORT COPIED TO CLIPBOARD":"📋 COPY FULL REPORT"}
           </button>
 
-          <button onClick={()=>{setPhase(0);setChecks({});setIrResult(null);setDevices([]);
-            setBleDevices([]);setPositions([
-              {label:"POSITION ALPHA",rssi:"",note:""},
-              {label:"POSITION BRAVO",rssi:"",note:""},
-              {label:"POSITION CHARLIE",rssi:"",note:""},
-            ]);setFindings([]);}} style={{...S.btnDim,width:"100%"}}>
-            ↺ NEW SWEEP
+          <button
+            onClick={()=>{setPhase(0);setChecks({});setIrResult(null);setDevices([]);
+              setBleDevices([]);setPositions([
+                {label:"POSITION ALPHA",rssi:"",note:""},
+                {label:"POSITION BRAVO",rssi:"",note:""},
+                {label:"POSITION CHARLIE",rssi:"",note:""},
+              ]);setFindings([]);}}
+            style={{...S.btnDim,width:"100%"}}
+            title="Start a new sweep while keeping existing operator notes and snapshots"
+          >
+            ↺ NEW SWEEP (KEEP NOTES & SNAPSHOTS)
           </button>
         </div>
       )}
