@@ -1,0 +1,135 @@
+# OUI Database for Flipper Zero OUI Lookup Tool
+# Format: AABBCC|Manufacturer|Category|ThreatLevel
+# Place at: SD/apps_data/oui_lookup/oui_db.txt
+# ThreatLevel: HIGH / MED / LOW
+# Last updated: 2025
+
+# ── Espressif Systems (ESP8266 / ESP32) ─────────────────────────────────
+# The most common chip inside cheap spy cameras
+# ANY of these in a scan = investigate immediately
+240AC4|Espressif Systems|Spy Cam Chip|HIGH
+30AEA4|Espressif Systems|Spy Cam Chip|HIGH
+A4CF12|Espressif Systems|Spy Cam Chip|HIGH
+84F3EB|Espressif Systems|Spy Cam Chip|HIGH
+8CAAB5|Espressif Systems|Spy Cam Chip|HIGH
+ECFABC|Espressif Systems|Spy Cam Chip|HIGH
+E8DB84|Espressif Systems|Spy Cam Chip|HIGH
+CC50E3|Espressif Systems|Spy Cam Chip|HIGH
+B4E62D|Espressif Systems|Spy Cam Chip|HIGH
+DC4F22|Espressif Systems|Spy Cam Chip|HIGH
+A8032A|Espressif Systems|Spy Cam Chip|HIGH
+BCDDC2|Espressif Systems|Spy Cam Chip|HIGH
+2C3AE8|Espressif Systems|Spy Cam Chip|HIGH
+943CC6|Espressif Systems|Spy Cam Chip|HIGH
+AC67B2|Espressif Systems|Spy Cam Chip|HIGH
+4C11AE|Espressif Systems|Spy Cam Chip|HIGH
+083AF2|Espressif Systems|Spy Cam Chip|HIGH
+FCF5C4|Espressif Systems|Spy Cam Chip|HIGH
+1866DA|Espressif Systems|Spy Cam Chip|HIGH
+70039F|Espressif Systems|Spy Cam Chip|HIGH
+485519|Espressif Systems|Spy Cam Chip|HIGH
+6C3B6B|Espressif Systems|Spy Cam Chip|HIGH
+D8F15B|Espressif Systems|Spy Cam Chip|HIGH
+
+# ── IP Camera SoC Manufacturers ─────────────────────────────────────────
+001AEF|Hisilicon|Surveillance SoC|HIGH
+0080AC|Ingenic Semiconductor|Camera SoC|HIGH
+001C7B|Ambarella Inc|IP Camera SoC|HIGH
+000CE7|MediaTek Inc|IoT Camera Chip|MED
+0090CC|Ralink Technology|WiFi Camera|MED
+00E04C|Realtek Semiconductor|WiFi Chip|MED
+0050FC|Realtek Semiconductor|WiFi Chip|MED
+001814|Realtek Semiconductor|WiFi Chip|MED
+00175C|Conexant Systems|IP Cam|MED
+00187A|Sigma Designs|IP Cam|MED
+
+# ── Known Surveillance / CCTV Brands ────────────────────────────────────
+3CEF8C|Dahua Technology|CCTV Brand|HIGH
+A41437|Dahua Technology|CCTV Brand|HIGH
+704880|Dahua Technology|CCTV Brand|HIGH
+C056E3|Hikvision|CCTV Brand|HIGH
+BCAD28|Hikvision|CCTV Brand|HIGH
+4419B6|Hikvision|CCTV Brand|HIGH
+306266|Hikvision|CCTV Brand|HIGH
+54C43A|Hikvision|CCTV Brand|HIGH
+EC5064|Hikvision|CCTV Brand|HIGH
+EC71DB|Reolink|IP Camera|MED
+8CF6B1|Reolink|IP Camera|MED
+001DB5|Axis Communications|IP Camera|MED
+ACCC8E|Axis Communications|IP Camera|MED
+00408C|Axis Communications|IP Camera|MED
+000E53|Mobotix|IP Camera|MED
+009612|Hanwha|CCTV Brand|MED
+001083|Bosch Security|CCTV Brand|MED
+001ABF|Pelco|CCTV Brand|MED
+
+# ── BLE and GPS Trackers ─────────────────────────────────────────────────
+40CBC0|Apple AirTag|BLE Tracker|HIGH
+3CCD57|Apple AirTag|BLE Tracker|HIGH
+7CF05F|Apple AirTag|BLE Tracker|HIGH
+DCDE11|Apple FindMy|BLE Tracker|HIGH
+087CBE|Tile Inc|BLE Tracker|HIGH
+AC3743|Tile Inc|BLE Tracker|HIGH
+94A3DA|Samsung SmartTag|BLE Tracker|HIGH
+40D3AE|Samsung SmartTag|BLE Tracker|HIGH
+7C7A91|Samsung SmartTag|BLE Tracker|HIGH
+98B8CF|Samsung|BLE Tracker|HIGH
+645AED|Chipolo|BLE Tracker|HIGH
+F0CB8B|Pebblebee|BLE Tracker|HIGH
+F4B167|Cube Tracker|BLE Tracker|HIGH
+00072B|Aware Technologies|GPS Tracker|HIGH
+000F33|Ituran Location|GPS Tracker|HIGH
+
+# ── Consumer Device Makers (LOW threat but useful for filtering) ─────────
+50C7BF|TP-Link Technologies|Router|LOW
+A42BB0|TP-Link Technologies|Router|LOW
+54AF97|TP-Link Technologies|Router|LOW
+C46E1F|TP-Link Technologies|Router|LOW
+1892F0|TP-Link Technologies|Router|LOW
+18D6C7|Apple Inc|Router / AP|LOW
+28CFDA|Apple Inc|Device|LOW
+90B21F|Apple Inc|Device|LOW
+F0DBF8|Apple Inc|Device|LOW
+001A2F|Cisco Systems|Router|LOW
+00259C|Cisco Systems|Router|LOW
+E8BAE3|Netgear|Router|LOW
+A021B7|Netgear|Router|LOW
+202BC1|Ubiquiti Networks|AP|LOW
+788A20|Ubiquiti Networks|AP|LOW
+B4FBE4|Google Inc|Device|LOW
+3497F6|Google Inc|Pixel|LOW
+40B4CD|Google Pixel|Mobile|LOW
+54EE75|Google Pixel|Mobile|LOW
+
+# ── Android / Samsung Mobile Devices ────────────────────────────────────
+F8A9D0|Samsung Electronics|Mobile|LOW
+005A13|Samsung Electronics|Mobile|LOW
+1C3ADE|Samsung Electronics|Mobile|LOW
+A4EB75|Samsung Electronics|Mobile|LOW
+54927C|Samsung Electronics|Mobile|LOW
+
+# ── Tuya Smart Platform (many cheap IoT / cameras) ──────────────────────
+1802F3|Tuya Smart|IoT Device|MED
+A4C138|Tuya Smart|IoT Device|MED
+CCA304|Tuya Smart|IoT Device|MED
+680571|Tuya Smart|IoT Device|MED
+
+# ── Shenzhen Generic / Unknown OUIs ─────────────────────────────────────
+# Devices from these OUIs are often unbranded Chinese hardware
+2CF0A2|Shenzhen Bilian Electronic|Generic IoT|MED
+00264D|Shenzhen Shenglu|Generic IoT|MED
+807D3A|Shenzhen Reecam|Camera|HIGH
+702E22|Shenzhen Apexis|Camera|HIGH
+DCA6E4|Shenzhen Vista Smart|Camera|MED
+
+# ── Development Boards (usually benign but worth noting) ────────────────
+DCA632|Raspberry Pi Foundation|Dev Board|LOW
+B827EB|Raspberry Pi Foundation|Dev Board|LOW
+E45F01|Raspberry Pi Foundation|Dev Board|LOW
+F09FC2|Arduino|Dev Board|LOW
+3C7198|Microchip Technology|Dev Board|LOW
+
+# ── WiFi Deauthers / Attack Tools ───────────────────────────────────────
+# These OUIs are commonly used in off-the-shelf deauth devices
+600194|Espressif - Deauther|Attack Tool|HIGH
+2462AB|Espressif - Deauther|Attack Tool|HIGH
