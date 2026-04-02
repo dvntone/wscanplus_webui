@@ -724,12 +724,24 @@ export default function SweepTool() {
             Cameras need line of sight — they point at what they record.
           </div>
           {VISUAL_CHECKS.map(c=>(
-            <div key={c.id} onClick={()=>toggleCheck(c.id)} style={{
-              ...S.card,cursor:"pointer",
-              borderColor:checks[c.id]?"#00ff46":"#1a2e1a",
-              display:"flex",alignItems:"flex-start",gap:12,
-              transition:"border-color 0.2s",
-            }}>
+            <div
+              key={c.id}
+              role="button"
+              tabIndex={0}
+              aria-pressed={!!checks[c.id]}
+              onClick={()=>toggleCheck(c.id)}
+              onKeyDown={e=>{
+                if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+                  e.preventDefault();
+                  toggleCheck(c.id);
+                }
+              }}
+              style={{
+                ...S.card,cursor:"pointer",
+                borderColor:checks[c.id]?"#00ff46":"#1a2e1a",
+                display:"flex",alignItems:"flex-start",gap:12,
+                transition:"border-color 0.2s",
+              }}>
               <div style={{
                 width:18,height:18,border:`1px solid ${checks[c.id]?"#00ff46":"#2a4a2a"}`,
                 background:checks[c.id]?"#00ff46":"transparent",
